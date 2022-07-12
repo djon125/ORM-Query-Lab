@@ -63,7 +63,7 @@ def problem_one(request):
     students_gpa = Student.objects.filter(gpa__gt=3.0).order_by('-gpa')
 
     for student in students_gpa:
-        print(f'First Name: {student.first_name} Last Name: {student.last_name} GPA: {student.gpa}')
+        print(f'Full Name: {student.first_name} {student.last_name} GPA: {student.gpa}')
 
 
 
@@ -110,7 +110,7 @@ def problem_two(request):
   instructor_before_2010 = Instructor.objects.filter(hire_date__lt='2010-01-01').order_by('hire_date')
   
   for instructor in instructor_before_2010:
-    print(f'Full Name {instructor.first_name} {instructor.last_name} Hire Date: {instructor.hire_date}')
+    print(f'Full Name {instructor.first_name} {instructor.last_name} \nHire Date: {instructor.hire_date}')
   
 
 
@@ -154,10 +154,10 @@ def problem_three(request):
   instructor_pk2_courses = Course.objects.filter(instructor_id = '2')
   instructor = Instructor.objects.get(id = '2')
   
-  print(f'Instructor Name: {instructor.first_name} {instructor.last_name}')
+  print(f'Instructor Name: {instructor.first_name} {instructor.last_name} \nCourses:')
   
   for course in instructor_pk2_courses:
-    print(f'Course: {course.name}')
+    print(f' - {course.name}')
 
 
   return complete(request)
@@ -358,12 +358,12 @@ LIMIT 21
 def problem_seven(request):
   #student_id = 11
   student = Student.objects.get(id = '11')
-  student.delete()
   try:
       student = Student.objects.get(id = '11')
   except ObjectDoesNotExist:
       print('Great! It failed and couldnt find the object because we deleted it!')
 
+  student.delete()
     # Make sure to set this equal to the primary key of the row you just created!
 
   return complete(request)
@@ -416,6 +416,7 @@ SELECT `school_db_student`.`id`,
 # Find all of the instructors that only belong to a single course
 # Print out the instructors full name and number of courses to the console
 def bonus_problem(request):
+ # one_course = Instructor.objects.annotate(instructor_id= Count('*'))
 
 
 
